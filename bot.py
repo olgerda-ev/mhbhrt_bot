@@ -7,18 +7,8 @@ import json
 import re
 import spacy
 import shelve
-import flask
-
-WEBHOOK_URL_BASE = "https://{}:{}".format(conf.WEBHOOK_HOST, conf.WEBHOOK_PORT)
-WEBHOOK_URL_PATH = "/{}/".format(conf.TOKEN, threaded=False)
 
 bot = telebot.TeleBot(conf.TOKEN)
-
-bot.remove_webhook()
-
-bot.set_webhook(url=WEBHOOK_URL_BASE+WEBHOOK_URL_PATH)
-
-app = flask.Flask(__name__)
 
 nlp = spacy.load("en_core_web_sm")
 
@@ -54,7 +44,7 @@ def send_welcome(message):
     keyboard.add(button3)
     keyboard.add(button4)
 
-    bot.send_message(message.chat.id, "*кажется, Оракул лениво пробуждается ото сна*")
+    bot.send_message(message.chat.id, "*кажется, оракул лениво пробуждается ото сна*")
     bot.send_message(message.chat.id, "Здравствуйте! Что бы Вы хотели узнать?", reply_markup=keyboard)
 
 
@@ -63,11 +53,8 @@ def tell_about(message):
     bot.send_message(message.chat.id, "Бот создан в рамках итогового проекта по курсу программирования.\n"
                                       "Для успешного взаимодействия с ним достаточно нажимать разные кнопочки и "
                                       "следовать присылаемым рекомендациям.\n"
-                                      "Для того, чтобы перезапустить Оракула, достаточно ввести /start - "
-                                      "это можно сделать в любой момент.\n"
-                                      "Другие доступные команды: \n/about "
-                                      "\n/send_sticker (Оракул напомнит, какой стикер Вы присылали ему "
-                                      "в последний раз)\n\n"
+                                      "Для того, чтобы перезапустить оракула, достаточно ввести /start - "
+                                      "это можно сделать в любой момент.\n\n"
                                       "Оракул обучался на английском переводе 'Махабхараты', "
                                       "доступном на gutenberg.org/")
 
@@ -80,7 +67,7 @@ def send_sticker(message):
         if key in storage:
             bot.send_sticker(message.chat.id, storage[key])
         else:
-            bot.send_message(message.chat.id, "Кажется, Вы ещё не делились с Оракулом стикерами...")
+            pass
 
 
 @bot.callback_query_handler(func=lambda call: call.data == 'button1')
@@ -132,10 +119,10 @@ def callback_inline(call):
 def callback_inline(call):
     if call.message and call.data == "button3":
         bot.send_message(call.message.chat.id, "А рассказать о чём? Напишите (на английском!) любое слово, которое "
-                                               "Вас интересует. Помните, что Оракул обучался на довольно древних "
+                                               "Вас интересует. Помните, что оракул обучался на довольно древних "
                                                "текстах, поэтому о совсем современных понятиях рассуждать он, скорее "
                                                "всего, откажется ¯\_( ͡° ͜ʖ ͡°)_/¯\n"
-                                               "(а ещё можно предложить Оракулу имя какого-нибудь героя эпоса - "
+                                               "(а ещё можно предложить оракулу имя какого-нибудь героя эпоса - "
                                                "тоже на английском)")
 
 
@@ -144,7 +131,7 @@ def callback_inline(call):
     if call.message and call.data == "button4":
         wisdom = comb_mod.make_short_sentence(284)
         wisdom = re.sub(r'\s([?.,’!;"](?:\s|$))', r'\1', wisdom)
-        bot.send_message(call.message.chat.id, "*Оракул задумывается на какое-то время, а затем таинственно изрекает*")
+        bot.send_message(call.message.chat.id, "*оракул задумывается на какое-то время, а затем таинственно изрекает*")
         bot.send_message(call.message.chat.id, wisdom)
 
 
@@ -161,7 +148,7 @@ def mess_for_pred(message):
                 else:
                     seed += ss[i] + ' '
 
-            bot.send_message(message.chat.id, "*Оракул задумывается...*")
+            bot.send_message(message.chat.id, "*оракул задумывается...*")
 
             timeout = time.time() + 60 * 2 + 5
             for i in range(1):
@@ -177,14 +164,14 @@ def mess_for_pred(message):
                 bot.send_message(message.chat.id, "*наконец, он изрекает*")
                 bot.send_message(message.chat.id, tm)
             else:
-                bot.send_message(message.chat.id, "Кажется, Оракул ещё не проснулся до конца, поэтому ваши слова "
+                bot.send_message(message.chat.id, "Кажется, оракул сегодня не в настроении, поэтому ваши слова "
                                                   "остаются без ответа... А может, звезды так сложились.")
         else:
             mes = s
             mes = mes.lower()
             mes = mes.split()
             m = mes[0]
-            bot.send_message(message.chat.id, "*Оракул загадочно поскрипывает чешуйками...*")
+            bot.send_message(message.chat.id, "*оракул загадочно поскрипывает чешуйками...*")
             timeout = time.time() + 60 * 2 + 5
             for i in range(1):
                 while True:
@@ -199,15 +186,15 @@ def mess_for_pred(message):
                 bot.send_message(message.chat.id, "*наконец, он изрекает*")
                 bot.send_message(message.chat.id, sm)
             else:
-                bot.send_message(message.chat.id, "Кажется, Оракул сегодня не в настроении, поэтому ваши слова "
+                bot.send_message(message.chat.id, "Кажется, оракул сегодня не в настроении, поэтому ваши слова "
                                                   "остаются без ответа... А может, звезды так сложились.")
     else:
-        bot.send_message(message.chat.id, "*Оракул мирно посапывает во сне...*")
+        bot.send_message(message.chat.id, "*оракул мирно посапывает во сне...*")
 
 
 @bot.message_handler(content_types=['sticker'])
 def sticker_received(message):
-    bot.send_message(message.chat.id, "*кажется, Оракул всё ещё спит, но выглядит более довольным...*")
+    bot.send_message(message.chat.id, "*кажется, оракул всё ещё спит, но выглядит более довольным...*")
     bot.send_sticker(message.chat.id, "CAACAgIAAxkBAAEEUnpiRHF0JEP3YGr55Jm2wuN_ORVATwACfwwAAsYlqUou_E0rSwtKmiME")
     sticker_id = message.sticker.file_id
     user_id = message.chat.id
@@ -215,17 +202,5 @@ def sticker_received(message):
         storage[str(user_id)] = sticker_id
 
 
-@app.route('/', methods=['GET', 'HEAD'])
-def index():
-    return 'ok'
-
-
-@app.route(WEBHOOK_URL_PATH, methods=['POST'])
-def webhook():
-    if flask.request.headers.get('content-type') == 'application/json':
-        json_string = flask.request.get_data().decode('utf-8')
-        update = telebot.types.Update.de_json(json_string)
-        bot.process_new_updates([update])
-        return ''
-    else:
-        flask.abort(403)
+if __name__ == '__main__':
+    bot.polling(none_stop=True)
