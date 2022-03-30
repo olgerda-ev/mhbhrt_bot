@@ -134,7 +134,7 @@ def callback_inline(call):
                                                "Ваше сообщение должно выглядеть примерно так:\n"
                                                "predict I have\n"
                                                "или\n"
-                                               "predict That day"
+                                               "predict That day\n"
                                                "или\n"
                                                "predict I\n"
                                                "\nОракулу может потребоваться некоторое время на чтение таинственных "
