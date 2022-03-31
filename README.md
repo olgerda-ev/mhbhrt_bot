@@ -3,8 +3,6 @@
 
 ссылка на папку, где будет презентация - https://drive.google.com/drive/folders/1ubx1PT-9DRmeY-h-n0gFZFYXBzj5BI-E?usp=sharing \
 на pythonanywhere - fringilla.pythonanywhere.com (https://www.pythonanywhere.com/user/fringilla/files/home/fringilla/mhbhrt_bot)
-\
-Бот-предсказатель, обитающий в телеграме как @mhbhrt_bot.\
 
 ## Что делает бот
 Долго-долго обучался на полном английском переводе "Махабхараты", так что теперь
